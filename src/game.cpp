@@ -16,19 +16,10 @@ Game::~Game()
 
 void Game::startGame()
 {   
-    /*
-    std::shared_ptr<Actor> player(new Actor("assets/player.png", mRenderer, (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300));
-    mActors.push_back(player);
-    std::shared_ptr<Actor> enemy(new Actor("assets/enemy.png", mRenderer, (gameWidth / 2) - 150, (gameHeight / 3) - 150, 300, 300));
-    mActors.push_back(enemy);
-    */
-    std::shared_ptr<Unit> player = createUnit("player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300);
-    mPlayerController = std::shared_ptr<Controller>(new Controller(player));
+    mPlayerController = std::make_shared<Controller>(createUnit("player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300));
     
     std::shared_ptr<Unit> enemy = createUnit("enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 300, 300);
-    std::shared_ptr<Controller> enemyController = std::shared_ptr<Controller>(new Controller(enemy));
-
-
+    std::shared_ptr<Controller> enemyController = std::make_shared<Controller>(enemy);
 }
 
 void Game::run()
@@ -93,9 +84,9 @@ void Game::stopGame()
 std::shared_ptr<Unit> Game::createUnit(std::string name, const char* texturePath, 
                         int x, int y, int w, int h)
 {
-    std::shared_ptr<Actor> createdActor(new Actor(texturePath, mRenderer, x, y, w, h));
+    std::shared_ptr<Actor> createdActor = std::make_shared<Actor>(texturePath, mRenderer, x, y, w, h);
     mActors.push_back(createdActor);
-    std::shared_ptr<Unit> createdUnit(new Unit(name, createdActor));
+    std::shared_ptr<Unit> createdUnit = std::make_shared<Unit>(name, createdActor);
     mUnits.push_back(createdUnit);
 
     return createdUnit;
