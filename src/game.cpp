@@ -110,5 +110,5 @@ void Game::checkCollisions()
 
 bool Game::checkCollision(const std::shared_ptr<Actor> a1, const std::shared_ptr<Actor> a2) const
 {
-    return SDL_HasIntersection(std::make_unique<SDL_Rect>(a1->getRect()).get(), std::make_unique<SDL_Rect>(a2->getRect()).get());
+    return SDL_HasIntersection(a1->getRect(),a2->getRect());
 }

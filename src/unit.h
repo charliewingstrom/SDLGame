@@ -17,6 +17,10 @@ public:
 
 
 private:
+    unsigned int hp;
+    unsigned int maxHp;
+    unsigned int atk;
+    
     std::string mName;
     std::shared_ptr<Actor> mActor;
     std::shared_ptr<Unit> mTarget;
