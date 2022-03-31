@@ -2,6 +2,7 @@
 #define ACTOR_H_
 #include <SDL2/SDL_image.h>
 #include <memory>
+
 class Actor
 {
 public:

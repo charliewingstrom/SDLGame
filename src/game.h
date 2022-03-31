@@ -21,7 +21,7 @@ public:
 
     void stopGame();
 private:
-    std::shared_ptr<Unit> createUnit(std::string name, const char* texturePath, 
+    void createUnit(UnitType unitType, std::string name, const char* texturePath, 
                     int x, int y, int w, int h);
     void checkCollisions();
     bool checkCollision(const std::shared_ptr<Actor> a1, const std::shared_ptr<Actor> a2) const;

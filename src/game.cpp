@@ -16,10 +16,8 @@ Game::~Game()
 
 void Game::startGame()
 {   
-    mPlayerController = std::make_shared<Controller>(createUnit("player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300));
-    
-    std::shared_ptr<Unit> enemy = createUnit("enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 300, 300);
-    std::shared_ptr<Controller> enemyController = std::make_shared<Controller>(enemy);
+    createUnit(UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300);
+    createUnit(UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 300, 300);
 }
 
 void Game::run()
@@ -81,15 +79,33 @@ void Game::stopGame()
     SDL_Quit();
 }
 
-std::shared_ptr<Unit> Game::createUnit(std::string name, const char* texturePath, 
-                        int x, int y, int w, int h)
+void Game::createUnit(UnitType unitType, std::string name, const char* texturePath, 
+                                        int x, int y, int w, int h)
 {
     std::shared_ptr<Actor> createdActor = std::make_shared<Actor>(texturePath, mRenderer, x, y, w, h);
     mActors.push_back(createdActor);
-    std::shared_ptr<Unit> createdUnit = std::make_shared<Unit>(name, createdActor);
+    std::shared_ptr<Unit> createdUnit = std::make_shared<Unit>(name, createdActor, unitType);
     mUnits.push_back(createdUnit);
 
-    return createdUnit;
+    switch (unitType)
+    {
+    case UnitType::player:
+        mPlayerController = std::make_shared<Controller>(createdUnit);
+
+        break;
+
+    case UnitType::enemy:
+        mEnemyController.push_back(std::make_shared<Controller>(createdUnit));
+        break;
+    case UnitType::npc:
+        mNpcController.push_back(std::make_shared<Controller>(createdUnit));
+        break;
+
+
+    //default:
+        // TODO log here
+        //break;
+    }
 }
 
 void Game::checkCollisions()

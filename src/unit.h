@@ -4,11 +4,19 @@
 #include <memory>
 
 class Controller;
+
+enum UnitType
+{
+    enemy,
+    player,
+    npc
+};
+
 class Unit
 {
 public:
     Unit() = delete;
-    Unit(std::string name, std::shared_ptr<Actor> unitActor);
+    Unit(std::string name, std::shared_ptr<Actor> unitActor, UnitType unitType);
     // Unit(std::string name, const char* texturePath, SDL_Renderer* renderer, 
     //     int x, int y, int w, int h);
     ~Unit() = default;
@@ -17,6 +25,8 @@ public:
 
 
 private:
+    UnitType     mUnitType;
+
     unsigned int hp;
     unsigned int maxHp;
     unsigned int atk;
