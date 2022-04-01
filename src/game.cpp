@@ -7,7 +7,7 @@ Game::Game()
 
     mWindow     = SDL_CreateWindow("Hello SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, 0);
     mRenderer   = SDL_CreateRenderer(mWindow, -1, 0);
-
+    mEvent      = std::make_unique<SDL_Event>();
 }
 
 Game::~Game()
@@ -22,45 +22,14 @@ void Game::startGame()
 
 void Game::run()
 {
-    SDL_Event event;
     while (isRunning) {
         frameStart = SDL_GetTicks();
         
-        // pre input
-        checkCollisions();
+        update();
+        
+        acceptInput();
 
-        // check for quiting
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-            case SDL_QUIT:
-                isRunning = false;
-                break;
-
-            case SDL_KEYDOWN:
-                switch(event.key.keysym.sym)
-                {
-                    case SDLK_ESCAPE:
-                        isRunning = false;
-                        break;
-                    
-                }
-            }
-        }
-
-        // accept other inputs
-        mPlayerController->acceptInput(gameWidth, gameHeight);
-
-        // draw
-        SDL_RenderClear(mRenderer);
-        SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
-
-        for (std::shared_ptr<Actor> currActor : mActors) {
-            currActor->draw(mRenderer);
-        }
-
-        SDL_RenderPresent(mRenderer);
+        draw();
 
         // check frame rate
         frameTime = SDL_GetTicks() - frameStart;
@@ -69,6 +38,51 @@ void Game::run()
             SDL_Delay(frameDelay - frameTime);
         }
     }
+}
+
+void Game::update() 
+{
+    // pre input
+    checkCollisions();
+
+    // check for quiting
+    while (SDL_PollEvent(mEvent.get()))
+    {
+        switch (mEvent->type)
+        {
+        case SDL_QUIT:
+            isRunning = false;
+            break;
+
+        case SDL_KEYDOWN:
+            switch(mEvent->key.keysym.sym)
+            {
+                case SDLK_ESCAPE:
+                    isRunning = false;
+                    break;
+                
+            }
+        }
+    }
+}
+
+void Game::acceptInput()
+{
+    mPlayerController->acceptInput(gameWidth, gameHeight);
+
+}
+
+void Game::draw()
+{
+    // draw
+    SDL_RenderClear(mRenderer);
+    SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+
+    for (std::shared_ptr<Actor> currActor : mActors) {
+        currActor->draw(mRenderer);
+    }
+
+    SDL_RenderPresent(mRenderer);
 }
 
 void Game::stopGame()
@@ -91,7 +105,6 @@ void Game::createUnit(UnitType unitType, std::string name, const char* texturePa
     {
     case UnitType::player:
         mPlayerController = std::make_shared<Controller>(createdUnit);
-
         break;
 
     case UnitType::enemy:

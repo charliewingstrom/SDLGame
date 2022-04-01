@@ -22,14 +22,19 @@ public:
     ~Unit() = default;
 
     const std::shared_ptr<Actor> getActor() const;
-
+    void update();
+    void takeDamage(unsigned int str);
 
 private:
+
+    void attack();
+
     UnitType     mUnitType;
 
     unsigned int hp;
     unsigned int maxHp;
     unsigned int atk;
+    unsigned int def;
     
     std::string mName;
     std::shared_ptr<Actor> mActor;

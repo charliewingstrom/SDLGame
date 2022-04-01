@@ -21,6 +21,11 @@ public:
 
     void stopGame();
 private:
+
+    void update();
+    void acceptInput();
+    void draw();
+
     void createUnit(UnitType unitType, std::string name, const char* texturePath, 
                     int x, int y, int w, int h);
     void checkCollisions();
@@ -36,6 +41,8 @@ private:
     int     frameTime   = 0;
     Uint32  frameStart  = 0;
 
+    std::unique_ptr<SDL_Event> mEvent;
+    
     SDL_Window*     mWindow;
     SDL_Renderer*   mRenderer;
 
