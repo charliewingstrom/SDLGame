@@ -16,8 +16,8 @@ Game::~Game()
 
 void Game::startGame()
 {   
-    createUnit(UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 300, 300);
-    createUnit(UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 300, 300);
+    createUnit(UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 100, 100);
+    createUnit(UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 100, 100);
 }
 
 void Game::run()
@@ -97,11 +97,9 @@ void Game::createUnit(UnitType unitType, std::string name, const char* texturePa
                                         int x, int y, int w, int h)
 {
     std::shared_ptr<Unit> createdUnit;
-    std::shared_ptr<Actor> createdActor = std::make_shared<Actor>(texturePath, mRenderer, x, y, w, h, createdUnit);
-    mActors.push_back(createdActor);
-    createdUnit = std::make_shared<Unit>(name, createdActor, unitType);
+    createdUnit = std::make_shared<Unit>(name, unitType, texturePath, mRenderer, x, y, w, h);
     mUnits.push_back(createdUnit);
-
+    mActors.push_back(createdUnit);
     switch (unitType)
     {
     case UnitType::player:

@@ -12,19 +12,18 @@ enum UnitType
     npc
 };
 
-class Unit
+class Unit : public Actor
 {
 public:
     Unit() = delete;
-    Unit(std::string name, std::shared_ptr<Actor> unitActor, UnitType unitType);
+    Unit(std::string name, UnitType unitType, const char* texturePath, 
+            SDL_Renderer* renderer, int x, int y, int w, int h);
     ~Unit() = default;
 
-    const std::shared_ptr<Actor> getActor() const;
     void update();
     void takeDamage(unsigned int str);
 
 private:
-
     void attack();
 
     UnitType     mUnitType;
@@ -35,7 +34,6 @@ private:
     unsigned int def;
     
     std::string mName;
-    std::shared_ptr<Actor> mActor;
     std::shared_ptr<Unit> mTarget;
 };
 #endif // UNIT_H_

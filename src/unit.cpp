@@ -1,13 +1,9 @@
 #include "unit.h"
 
-Unit::Unit(std::string name, std::shared_ptr<Actor> unitActor, UnitType unitType)
-    :mName(name), mActor(unitActor), mUnitType(unitType)
+Unit::Unit(std::string name, UnitType unitType, const char* texturePath, 
+            SDL_Renderer* renderer, int x, int y, int w, int h)
+    :Actor(texturePath, renderer, x, y, w, h), mName(name), mUnitType(unitType)
 {}
-
-const std::shared_ptr<Actor> Unit::getActor() const
-{
-    return mActor;
-}
 
 void Unit::update() 
 {
@@ -17,6 +13,7 @@ void Unit::update()
 void Unit::attack()
 {
     if (mTarget != nullptr) {
+        // attack the target
         mTarget->takeDamage(atk);
     }
 }

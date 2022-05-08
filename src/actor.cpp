@@ -1,8 +1,7 @@
 #include "actor.h"
 
 Actor::Actor(const char* texturePath, SDL_Renderer* renderer,
-             int x, int y, int w, int h, std::shared_ptr<Unit> unit)
-             :mUnit(unit)
+             int x, int y, int w, int h)
 {
     SDL_Surface* tmpSurface = IMG_Load(texturePath);
     mTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
@@ -25,10 +24,6 @@ const SDL_Rect* Actor::getRect() const
     return mRect.get();
 }
 
-const std::shared_ptr<Unit> Actor::getUnit() const
-{
-    return mUnit;
-}
 
 void Actor::move(int x, int y, int gameWidth, int gameHeight)
 {

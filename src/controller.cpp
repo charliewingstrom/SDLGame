@@ -33,5 +33,5 @@ void Controller::acceptInput(int gameWidth, int gameHeight) const
         xMov += 10;
     }
 
-    mUnit->getActor()->move(xMov, yMov, gameWidth, gameHeight);
+    mUnit->move(xMov, yMov, gameWidth, gameHeight);
 }
