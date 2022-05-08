@@ -25,9 +25,9 @@ void Game::run()
     while (isRunning) {
         frameStart = SDL_GetTicks();
         
-        update();
-        
         acceptInput();
+        
+        update();
 
         draw();
 
@@ -96,9 +96,10 @@ void Game::stopGame()
 void Game::createUnit(UnitType unitType, std::string name, const char* texturePath, 
                                         int x, int y, int w, int h)
 {
-    std::shared_ptr<Actor> createdActor = std::make_shared<Actor>(texturePath, mRenderer, x, y, w, h);
+    std::shared_ptr<Unit> createdUnit;
+    std::shared_ptr<Actor> createdActor = std::make_shared<Actor>(texturePath, mRenderer, x, y, w, h, createdUnit);
     mActors.push_back(createdActor);
-    std::shared_ptr<Unit> createdUnit = std::make_shared<Unit>(name, createdActor, unitType);
+    createdUnit = std::make_shared<Unit>(name, createdActor, unitType);
     mUnits.push_back(createdUnit);
 
     switch (unitType)
@@ -134,6 +135,13 @@ void Game::checkCollisions()
             }
         }
         mCollisions.insert(std::make_pair(currActor, collidingActors));
+    }
+
+    // undo movements for players that are colliding
+    for (auto const& [actor, colliders] : mCollisions) {
+        for (auto const& collidingActor : colliders) {
+            collidingActor->revertLastMove();
+        }
     }
 }
 

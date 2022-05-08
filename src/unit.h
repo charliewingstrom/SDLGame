@@ -17,8 +17,6 @@ class Unit
 public:
     Unit() = delete;
     Unit(std::string name, std::shared_ptr<Actor> unitActor, UnitType unitType);
-    // Unit(std::string name, const char* texturePath, SDL_Renderer* renderer, 
-    //     int x, int y, int w, int h);
     ~Unit() = default;
 
     const std::shared_ptr<Actor> getActor() const;
