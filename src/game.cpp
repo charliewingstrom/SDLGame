@@ -16,8 +16,9 @@ Game::~Game()
 
 void Game::startGame()
 {   
-    createUnit(UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 100, 100);
-    createUnit(UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 100, 100);
+    createActor(Groups::ColGroup::Background, "assets/space.png", 0, 0, 1920, 1080);
+    createUnit(Groups::ColGroup::Unit, UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 100, 100);
+    createUnit(Groups::ColGroup::Unit, UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 100, 100);
 }
 
 void Game::run()
@@ -93,11 +94,11 @@ void Game::stopGame()
     SDL_Quit();
 }
 
-void Game::createUnit(UnitType unitType, std::string name, const char* texturePath, 
-                                        int x, int y, int w, int h)
+void Game::createUnit(Groups::ColGroup colGroup, UnitType unitType, std::string name, const char* texturePath, 
+                        int x, int y, int w, int h)
 {
     std::shared_ptr<Unit> createdUnit;
-    createdUnit = std::make_shared<Unit>(name, unitType, texturePath, mRenderer, x, y, w, h);
+    createdUnit = std::make_shared<Unit>(colGroup, name, unitType, texturePath, mRenderer, x, y, w, h);
     mUnits.push_back(createdUnit);
     mActors.push_back(createdUnit);
     switch (unitType)
@@ -118,6 +119,11 @@ void Game::createUnit(UnitType unitType, std::string name, const char* texturePa
         // TODO log here
         //break;
     }
+}
+
+void Game::createActor(Groups::ColGroup colGroup, const char* texturePath, int x, int y, int w, int h)
+{
+    mActors.push_back(std::make_shared<Actor>(colGroup, texturePath, mRenderer, x, y, w, h));
 }
 
 void Game::checkCollisions()
@@ -145,5 +151,5 @@ void Game::checkCollisions()
 
 bool Game::checkCollision(const std::shared_ptr<Actor> a1, const std::shared_ptr<Actor> a2) const
 {
-    return SDL_HasIntersection(a1->getRect(),a2->getRect());
+    return SDL_HasIntersection(a1->getRect(),a2->getRect()) and (a1->getColGroup() == a2->getColGroup());
 }

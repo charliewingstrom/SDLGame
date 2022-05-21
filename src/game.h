@@ -8,6 +8,7 @@
 #include "controller.h"
 #include "unit.h"
 #include "actor.h"
+#include "col_groups.h"
 
 class Game
 {
@@ -26,8 +27,10 @@ private:
     void acceptInput();
     void draw();
 
-    void createUnit(UnitType unitType, std::string name, const char* texturePath, 
+    void createUnit(Groups::ColGroup colGroup, UnitType unitType, std::string name, const char* texturePath, 
                     int x, int y, int w, int h);
+    void createActor(Groups::ColGroup colGroup, const char* texturePath, int x, int y, int w, int h);
+    
     void checkCollisions();
     bool checkCollision(const std::shared_ptr<Actor> a1, const std::shared_ptr<Actor> a2) const;
 

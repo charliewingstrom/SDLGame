@@ -2,7 +2,7 @@
 #define UNIT_H_
 #include "actor.h"
 #include <memory>
-
+#include "col_groups.h"
 class Controller;
 
 enum UnitType
@@ -16,7 +16,7 @@ class Unit : public Actor
 {
 public:
     Unit() = delete;
-    Unit(std::string name, UnitType unitType, const char* texturePath, 
+    Unit(Groups::ColGroup colGroup, std::string name, UnitType unitType, const char* texturePath, 
             SDL_Renderer* renderer, int x, int y, int w, int h);
     ~Unit() = default;
 

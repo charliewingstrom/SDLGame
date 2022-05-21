@@ -1,7 +1,8 @@
 #include "actor.h"
 
-Actor::Actor(const char* texturePath, SDL_Renderer* renderer,
+Actor::Actor(Groups::ColGroup colGroup, const char* texturePath, SDL_Renderer* renderer,
              int x, int y, int w, int h)
+             :mColGroup(colGroup)
 {
     SDL_Surface* tmpSurface = IMG_Load(texturePath);
     mTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
@@ -24,6 +25,10 @@ const SDL_Rect* Actor::getRect() const
     return mRect.get();
 }
 
+const Groups::ColGroup Actor::getColGroup() const
+{
+    return mColGroup;
+}
 
 void Actor::move(int x, int y, int gameWidth, int gameHeight)
 {
