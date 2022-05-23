@@ -22,6 +22,7 @@ public:
 
     void update();
     void takeDamage(unsigned int str);
+    
 
 private:
     void attack();
@@ -34,6 +35,5 @@ private:
     unsigned int def;
     
     std::string mName;
-    std::shared_ptr<Unit> mTarget;
 };
 #endif // UNIT_H_

@@ -69,8 +69,14 @@ void Game::update()
 
 void Game::acceptInput()
 {
-    mPlayerController->acceptInput(gameWidth, gameHeight);
+    mPlayerController->update(gameWidth, gameHeight);
 
+    for (auto controller : mNpcController) {
+        controller->update(gameWidth, gameHeight);
+    }
+    for (auto controller : mEnemyController) {
+        controller->update(gameWidth, gameHeight);
+    }
 }
 
 void Game::draw()
@@ -104,7 +110,7 @@ void Game::createUnit(Groups::ColGroup colGroup, UnitType unitType, std::string 
     switch (unitType)
     {
     case UnitType::player:
-        mPlayerController = std::make_shared<Controller>(createdUnit);
+        mPlayerController = std::make_shared<PlayerController>(createdUnit);
         break;
 
     case UnitType::enemy:

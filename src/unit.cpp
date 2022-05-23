@@ -12,10 +12,6 @@ void Unit::update()
 
 void Unit::attack()
 {
-    if (mTarget != nullptr) {
-        // attack the target
-        mTarget->takeDamage(atk);
-    }
 }
 
 void Unit::takeDamage(unsigned int atk)

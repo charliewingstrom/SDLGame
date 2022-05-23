@@ -9,13 +9,13 @@ class Controller
 {
 public:
     Controller() = default;
-    Controller(std::shared_ptr<Unit> controlledUnit);
+    Controller(std::shared_ptr<Unit> controlledUnit, std::shared_ptr<Unit> targetUnit = nullptr);
     ~Controller();
 
-    virtual void acceptInput(int gameWidth, int gameHeight, SDL_Event& event) const;
-    virtual void acceptInput(int gameWidth, int gameHeight) const;
+    virtual void update(int gameWidth, int gameHeight);
 
-private:
+protected:
     std::shared_ptr<Unit> mUnit;
+    std::shared_ptr<Unit> mTarget;
 };
 #endif // CONTROLLER_H_

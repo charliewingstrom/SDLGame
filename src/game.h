@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include "controller.h"
+#include "player_controller.h"
 #include "unit.h"
 #include "actor.h"
 #include "col_groups.h"
@@ -49,7 +49,7 @@ private:
     SDL_Window*     mWindow;
     SDL_Renderer*   mRenderer;
 
-    std::shared_ptr<Controller>                 mPlayerController;
+    std::shared_ptr<PlayerController>           mPlayerController;
     std::vector<std::shared_ptr<Controller>>    mNpcController;
     std::vector<std::shared_ptr<Controller>>    mEnemyController;
     std::vector<std::shared_ptr<Actor>>         mActors;
