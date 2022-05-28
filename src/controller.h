@@ -14,6 +14,8 @@ public:
 
     virtual void update(int gameWidth, int gameHeight);
 
+    void setTarget(std::shared_ptr<Unit> target);
+
 protected:
     std::shared_ptr<Unit> mUnit;
     std::shared_ptr<Unit> mTarget;

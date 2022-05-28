@@ -74,7 +74,17 @@ void Game::acceptInput()
     for (auto controller : mNpcController) {
         controller->update(gameWidth, gameHeight);
     }
+    UnitType targetUnitType;
+    std::shared_ptr<Unit> targetUnit;
     for (auto controller : mEnemyController) {
+        for (auto unit : mUnits) {
+            targetUnitType = unit->getUnitType();
+            if (targetUnitType == UnitType::npc or targetUnitType == UnitType::player) {
+                targetUnit = unit;
+                break;
+            }
+        }
+        controller->setTarget(targetUnit);
         controller->update(gameWidth, gameHeight);
     }
 }

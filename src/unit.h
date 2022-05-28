@@ -23,7 +23,7 @@ public:
     void update();
     void takeDamage(unsigned int str);
     
-
+    UnitType getUnitType() const;
 private:
     void attack();
 

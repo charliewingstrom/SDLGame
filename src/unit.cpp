@@ -18,3 +18,8 @@ void Unit::takeDamage(unsigned int atk)
 {
     hp -= atk - def;
 }
+
+UnitType Unit::getUnitType() const 
+{
+    return mUnitType;
+}
