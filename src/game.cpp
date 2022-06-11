@@ -17,8 +17,8 @@ Game::~Game()
 void Game::startGame()
 {   
     createActor(Groups::ColGroup::Background, "assets/space.png", 0, 0, 1920, 1080);
-    createUnit(Groups::ColGroup::Unit, UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 100, 100);
-    createUnit(Groups::ColGroup::Unit, UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 100, 100);
+    createUnit(Groups::ColGroup::Unit, UnitType::player, "player", "assets/player.png", (gameWidth / 2) - 150, (gameHeight / 3) - 150, 100, 100);
+    createUnit(Groups::ColGroup::Unit, UnitType::enemy, "enemy", "assets/enemy.png", (gameWidth / 2) - 150, (gameHeight / 1.3) - 150, 100, 100);
 }
 
 void Game::run()

@@ -24,16 +24,20 @@ public:
     void takeDamage(unsigned int str);
     
     UnitType getUnitType() const;
+
+    int getSpeed() const;
 private:
     void attack();
 
-    UnitType     mUnitType;
+    UnitType mUnitType;
+
+    int mSpeed;
 
     unsigned int hp;
     unsigned int maxHp;
     unsigned int atk;
     unsigned int def;
-    
+
     std::string mName;
 };
 #endif // UNIT_H_

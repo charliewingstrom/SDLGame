@@ -12,9 +12,19 @@ Controller::~Controller()
 void Controller::update(int gameWidth, int gameHeight) 
 {
     // find diff in position between mUnit and mTarget
+    // create a vector len == 1 
     if (mTarget != nullptr and mUnit != nullptr) {
-        int x = (mTarget->getRect()->x - mUnit->getRect()->x) / 100;
-        int y = (mTarget->getRect()->y - mUnit->getRect()->y) / 100;
+        float a = mTarget->getRect()->x - mUnit->getRect()->x;
+        float b = mTarget->getRect()->y - mUnit->getRect()->y;
+
+        float c = sqrt(a*a + b*b);
+        
+        float x = a / c;
+        float y = b / c;
+
+        x *= mUnit->getSpeed();
+        y *= mUnit->getSpeed();
+
         mUnit->move(x, y, gameWidth, gameHeight);
     }
 }

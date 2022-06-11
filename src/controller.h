@@ -2,7 +2,7 @@
 #define CONTORLLER_H_
 #include <memory>
 #include <SDL2/SDL.h>
-
+#include <cmath>
 #include "unit.h"
 
 class Controller
